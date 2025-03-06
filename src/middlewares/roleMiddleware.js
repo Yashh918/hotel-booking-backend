@@ -4,6 +4,8 @@ export const isAdmin = (req, res, next) => {
             .status(403)
             .json({message: "Access denied. Admin only!"});
     }
+
+    next();
 }
 
 export const isVendor = (req, res, next) => {
@@ -12,6 +14,7 @@ export const isVendor = (req, res, next) => {
             .status(403)
             .json({message: "Acces denied. Vendor only!"});
     }
+    next();
 }
 
 export const isCustomer = (req, res, next) => {
@@ -20,4 +23,5 @@ export const isCustomer = (req, res, next) => {
             .status(403)
             .json({message: "Acces denied. Customer only!"})
     }
+    next()
 }

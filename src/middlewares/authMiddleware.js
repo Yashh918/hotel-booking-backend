@@ -1,4 +1,4 @@
-import { isTokenBlacklisted } from "../utils/tokenBlacklist";
+import { isTokenBlacklisted } from "../utils/tokenBlacklist.js";
 import jwt from 'jsonwebtoken'
 
 export const authenticate = async (req, res, next) => {
