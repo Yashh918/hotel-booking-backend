@@ -68,7 +68,6 @@ export const getUnapprovedListings = async (req, res) => {
         let filters = { isApproved: false }
 
         const listings = await Listing.find(filters)
-        console.log(listings)
 
         return res
             .status(200)
@@ -110,11 +109,25 @@ export const getListing = async (req, res) => {
 
 export const approveListing = async (req, res) => {
     try {
+        const { id } = req.params
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res
+                .status(400)
+                .json({ error: "Invalid listing id" });
+        }
+
         const listing = await Listing.findByIdAndUpdate(
-            req.params.id,
+            id,
             { isApproved: true },
             { new: true }
         )
+
+        if (!listing) {
+            return res
+                .status(404)
+                .json({ error: "Listing not found" });
+        }
 
         return res
             .status(200)
@@ -161,7 +174,21 @@ export const updateListing = async (req, res) => {
 
 export const deleteListing = async (req, res) => {
     try {
-        await Listing.findByIdAndDelete(req.params.id)
+        const { id } = req.params
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res
+                .status(400)
+                .json({ error: "Invalid listing id" });
+        }
+
+        const listing = await Listing.findByIdAndDelete(id)
+
+        if (!listing) {
+            return res
+                .status(404)
+                .json({ error: "Listing not found" });
+        }
 
         return res
             .status(200)
