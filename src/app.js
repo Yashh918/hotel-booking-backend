@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import authRouter from './routes/authRoutes.js';
-import listingRouter from './routes/listingRoutes.js'
+import listingRouter from './routes/listingRoutes.js';
+import unitRouter from './routes/unitRoutes.js';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ connectToDatabase();
 // routes
 app.use("/api/auth", authRouter)
 app.use("/api/listings", listingRouter)
+app.use("/api/units", unitRouter)
 
 // test route
 app.get('/', (req, res) => {
